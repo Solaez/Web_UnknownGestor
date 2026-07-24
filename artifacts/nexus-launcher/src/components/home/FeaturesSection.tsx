@@ -1,75 +1,78 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Palette, Trophy, Users, Cloud, UserCircle, Clock } from 'lucide-react';
+import { Store, Gamepad2, Puzzle, Download, Database, Sparkles } from 'lucide-react';
+
+import homeScreen    from '@assets/app-home.png';
+import romsScreen    from '@assets/app-roms.png';
+import modsScreen    from '@assets/app-mods.png';
+import dlScreen      from '@assets/app-downloads.png';
 
 const features = [
   {
     id: 1,
-    highlight: 'Custom Themes.',
-    description: 'Download thousands of community-made themes for your launcher.',
-    icon: Palette,
+    highlight: 'Tienda de Aplicaciones.',
+    description: 'Instalación simplificada de programas, drivers y juegos. Categorización inteligente: Drivers, Juegos, Diseño, Desarrollo y más.',
+    icon: Store,
     accent: 'cyan',
-    imageSrc: '',
-    imageAlt: 'Custom Themes screenshot',
-    // bento: wide card, shorter image
+    imageSrc: homeScreen,
+    imageAlt: 'Tienda de aplicaciones',
     colSpan: 'md:col-span-2',
-    imageAspect: 'aspect-[16/7]',
+    imageAspect: 'aspect-[16/8]',
   },
   {
     id: 2,
-    highlight: 'Achievements.',
-    description: 'Unlock achievements, showcase your gaming prowess, and compare your progress with friends.',
-    icon: Trophy,
+    highlight: 'Gestor de ROMs.',
+    description: 'Lanzador integrado para tus juegos retro. Biblioteca personal de favoritos y soporte para múltiples fuentes de descarga.',
+    icon: Gamepad2,
     accent: 'purple',
-    imageSrc: '',
-    imageAlt: 'Achievements screenshot',
-    // bento: narrow + tall — row-span-2 handled via self-alignment trick
+    imageSrc: romsScreen,
+    imageAlt: 'Biblioteca de ROMs y emuladores',
     colSpan: 'md:col-span-1',
     imageAspect: 'aspect-[3/4]',
   },
   {
     id: 3,
-    highlight: 'Friends & Status.',
-    description: 'See what your crew is playing in real time and join their sessions instantly.',
-    icon: Users,
+    highlight: 'Explorador de Mods.',
+    description: 'Navega NexusMods y GameBanana directamente desde la app. Búsqueda avanzada por juego o mod específico sin salir del programa.',
+    icon: Puzzle,
     accent: 'cyan',
-    imageSrc: '',
-    imageAlt: 'Friends & Status screenshot',
+    imageSrc: modsScreen,
+    imageAlt: 'Explorador de mods NexusMods y GameBanana',
     colSpan: 'md:col-span-1',
     imageAspect: 'aspect-[4/3]',
   },
   {
     id: 4,
-    highlight: 'Cloud Saving.',
-    description: "Nexus Cloud's seamless sync ensures you pick up right where you left off on any device.",
-    icon: Cloud,
+    highlight: 'Gestor de Descargas.',
+    description: 'Motor WebTorrent nativo para descargas de torrents. Soporte para 1fichier, Mediafire y más. Monitoreo de progreso en tiempo real.',
+    icon: Download,
     accent: 'purple',
-    imageSrc: '',
-    imageAlt: 'Cloud Saving screenshot',
+    imageSrc: dlScreen,
+    imageAlt: 'Gestor de descargas con WebTorrent',
     colSpan: 'md:col-span-2',
-    imageAspect: 'aspect-[16/7]',
+    imageAspect: 'aspect-[16/8]',
   },
   {
     id: 5,
-    highlight: 'Custom Profile.',
-    description: 'Create a striking presence, showcase your achievements and personalize your identity.',
-    icon: UserCircle,
+    highlight: 'Multi-Fuente.',
+    description: 'Agrega múltiples repositorios JSON externos. Tu catálogo crece sin límites — personaliza las fuentes de contenido a tu gusto.',
+    icon: Database,
     accent: 'cyan',
     imageSrc: '',
-    imageAlt: 'Custom Profile screenshot',
+    imageAlt: 'Soporte multi-fuente',
     colSpan: 'md:col-span-1',
     imageAspect: 'aspect-video',
   },
   {
     id: 6,
-    highlight: 'Playtime Tracking.',
-    description: 'Track every hour on every game and show off to your friends!',
-    icon: Clock,
+    highlight: 'Diseño Glassmorphism.',
+    description: 'Interfaz moderna con efectos de vidrio, temas oscuros y animaciones suaves. Una experiencia visual tan buena como su potencia técnica.',
+    icon: Sparkles,
     accent: 'purple',
     imageSrc: '',
-    imageAlt: 'Playtime Tracking screenshot',
+    imageAlt: 'Interfaz glassmorphism',
     colSpan: 'md:col-span-2',
-    imageAspect: 'aspect-[16/7]',
+    imageAspect: 'aspect-[16/8]',
   },
 ];
 
@@ -89,13 +92,13 @@ function FeatureCard({ feature, delay }: { feature: (typeof features)[0]; delay:
           : 'border-purple-500/20 hover:border-purple-500/60 hover:shadow-[0_0_40px_-4px_rgba(124,58,237,0.18)]'
       }`}
     >
-      {/* Image / placeholder with zoom */}
+      {/* Image area with zoom on hover */}
       <div className={`relative w-full ${feature.imageAspect} overflow-hidden`}>
         {feature.imageSrc ? (
           <img
             src={feature.imageSrc}
             alt={feature.imageAlt}
-            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+            className="w-full h-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
           />
         ) : (
           <div
@@ -108,15 +111,11 @@ function FeatureCard({ feature, delay }: { feature: (typeof features)[0]; delay:
             <div
               className={`p-5 rounded-2xl border transition-all duration-300 group-hover:scale-110 ${
                 isCyan
-                  ? 'border-cyan-500/30 bg-cyan-500/10 group-hover:bg-cyan-500/20 group-hover:border-cyan-400/50'
-                  : 'border-purple-500/30 bg-purple-500/10 group-hover:bg-purple-500/20 group-hover:border-purple-400/50'
+                  ? 'border-cyan-500/30 bg-cyan-500/10 group-hover:bg-cyan-500/20'
+                  : 'border-purple-500/30 bg-purple-500/10 group-hover:bg-purple-500/20'
               }`}
             >
-              <Icon
-                className={`w-10 h-10 transition-colors ${
-                  isCyan ? 'text-cyan-400' : 'text-purple-400'
-                }`}
-              />
+              <Icon className={`w-10 h-10 ${isCyan ? 'text-cyan-400' : 'text-purple-400'}`} />
             </div>
             <span className="text-[10px] text-white/15 font-mono tracking-widest uppercase select-none">
               {feature.imageAlt}
@@ -124,7 +123,7 @@ function FeatureCard({ feature, delay }: { feature: (typeof features)[0]; delay:
           </div>
         )}
 
-        {/* Bottom fade into card body */}
+        {/* Bottom gradient */}
         <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[#0d0d14] to-transparent pointer-events-none" />
       </div>
 
@@ -138,9 +137,9 @@ function FeatureCard({ feature, delay }: { feature: (typeof features)[0]; delay:
         </p>
       </div>
 
-      {/* Corner accent glow */}
+      {/* Corner glow on hover */}
       <div
-        className={`absolute top-0 right-0 w-24 h-24 rounded-full blur-3xl opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none ${
+        className={`absolute top-0 right-0 w-24 h-24 rounded-full blur-3xl opacity-0 group-hover:opacity-25 transition-opacity duration-500 pointer-events-none ${
           isCyan ? 'bg-cyan-400' : 'bg-purple-400'
         }`}
       />
@@ -160,7 +159,7 @@ export default function FeaturesSection() {
             viewport={{ once: true }}
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-sm font-medium mb-5"
           >
-            <span className="text-base">⚡</span> It keeps getting better!
+            <span className="text-base">⚡</span> Cada vez más potente
           </motion.div>
 
           <motion.h2
@@ -170,9 +169,9 @@ export default function FeaturesSection() {
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-5xl font-black font-display mb-4 text-white"
           >
-            We have lots of{' '}
+            Tenemos muchas{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
-              cool features
+              características geniales
             </span>
           </motion.h2>
 
@@ -183,12 +182,12 @@ export default function FeaturesSection() {
             transition={{ delay: 0.2 }}
             className="text-base text-white/50 max-w-xl mx-auto"
           >
-            Convenience of a modern game launcher combined with the freedom and flexibility of a
-            decentralized platform.
+            La comodidad de una tienda moderna combinada con la libertad y flexibilidad
+            de una plataforma descentralizada.
           </motion.p>
         </div>
 
-        {/* Bento grid — 3 columns, varying card widths */}
+        {/* Bento grid — 3 cols, varying widths */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-auto">
           {features.map((feature, i) => (
             <FeatureCard key={feature.id} feature={feature} delay={i * 0.07} />

@@ -1,8 +1,9 @@
 import React from 'react';
 import Navbar from '@/components/home/Navbar';
 import HeroSection from '@/components/home/HeroSection';
+import AboutSection from '@/components/home/AboutSection';
 import FeaturesSection from '@/components/home/FeaturesSection';
-import ClassicsSection from '@/components/home/ClassicsSection';
+import CatalogSection from '@/components/home/CatalogSection';
 import CloudSection from '@/components/home/CloudSection';
 import DownloadSection from '@/components/home/DownloadSection';
 import Footer from '@/components/home/Footer';
@@ -20,8 +21,9 @@ export default function Home() {
         <Navbar />
         <main className="flex-1">
           <HeroSection />
+          <AboutSection />
           <FeaturesSection />
-          <ClassicsSection />
+          <CatalogSection />
           <CloudSection />
           <DownloadSection />
         </main>

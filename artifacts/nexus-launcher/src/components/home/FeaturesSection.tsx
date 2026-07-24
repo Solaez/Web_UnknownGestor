@@ -1,197 +1,182 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Palette, Trophy, Users, Cloud } from 'lucide-react';
+import { Palette, Trophy, Users, Cloud, UserCircle, Clock } from 'lucide-react';
+
+const features = [
+  {
+    id: 1,
+    title: 'Custom Themes',
+    highlight: 'Custom Themes.',
+    description: 'Download thousands of community-made themes for your launcher.',
+    icon: Palette,
+    accent: 'cyan',
+    placeholderBg: 'from-cyan-950/80 via-slate-900 to-slate-950',
+    placeholderIcon: Palette,
+    // Replace src with your screenshot path, e.g. "/screenshots/themes.png"
+    imageSrc: '',
+    imageAlt: 'Custom Themes screenshot',
+  },
+  {
+    id: 2,
+    title: 'Achievements',
+    highlight: 'Achievements.',
+    description: 'Unlock achievements, showcase your gaming prowess, and compare your progress with friends — all within the Nexus ecosystem.',
+    icon: Trophy,
+    accent: 'purple',
+    placeholderBg: 'from-purple-950/80 via-slate-900 to-slate-950',
+    placeholderIcon: Trophy,
+    imageSrc: '',
+    imageAlt: 'Achievements screenshot',
+  },
+  {
+    id: 3,
+    title: 'Friends & Status',
+    highlight: 'Friends & Status.',
+    description: 'Connect, see what they\'re playing, view their achievements and their beautifully customized profiles.',
+    icon: Users,
+    accent: 'cyan',
+    placeholderBg: 'from-cyan-950/60 via-slate-900 to-slate-950',
+    placeholderIcon: Users,
+    imageSrc: '',
+    imageAlt: 'Friends & Status screenshot',
+  },
+  {
+    id: 4,
+    title: 'Cloud Saving',
+    highlight: 'Cloud Saving.',
+    description: 'Nexus Cloud\'s seamless sync ensures you can pick up right where you left off, across all your devices.',
+    icon: Cloud,
+    accent: 'purple',
+    placeholderBg: 'from-teal-950/80 via-slate-900 to-slate-950',
+    placeholderIcon: Cloud,
+    imageSrc: '',
+    imageAlt: 'Cloud Saving screenshot',
+  },
+  {
+    id: 5,
+    title: 'Custom Profile',
+    highlight: 'Custom Profile.',
+    description: 'Create a striking combination, showcase your achievements and customize your presence in Nexus.',
+    icon: UserCircle,
+    accent: 'cyan',
+    placeholderBg: 'from-cyan-950/60 via-slate-900 to-slate-950',
+    placeholderIcon: UserCircle,
+    imageSrc: '',
+    imageAlt: 'Custom Profile screenshot',
+  },
+  {
+    id: 6,
+    title: 'Playtime Tracking',
+    highlight: 'Playtime Tracking.',
+    description: 'Track your hours on every game and show off to your friends!',
+    icon: Clock,
+    accent: 'purple',
+    placeholderBg: 'from-purple-950/80 via-slate-900 to-slate-950',
+    placeholderIcon: Clock,
+    imageSrc: '',
+    imageAlt: 'Playtime Tracking screenshot',
+  },
+];
+
+function FeatureCard({ feature, delay }: { feature: typeof features[0]; delay: number }) {
+  const Icon = feature.placeholderIcon;
+  const isCyan = feature.accent === 'cyan';
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.5, delay }}
+      className={`group relative rounded-2xl overflow-hidden border transition-all duration-300 ${
+        isCyan
+          ? 'border-cyan-500/20 hover:border-cyan-500/50 hover:shadow-[0_0_32px_0_rgba(0,212,255,0.12)]'
+          : 'border-purple-500/20 hover:border-purple-500/50 hover:shadow-[0_0_32px_0_rgba(124,58,237,0.12)]'
+      } bg-[#0d0d14]`}
+    >
+      {/* Image area */}
+      <div className="relative w-full aspect-[16/9] overflow-hidden bg-slate-950">
+        {feature.imageSrc ? (
+          <img
+            src={feature.imageSrc}
+            alt={feature.imageAlt}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          /* Placeholder — replace imageSrc above with your screenshot path */
+          <div className={`w-full h-full bg-gradient-to-br ${feature.placeholderBg} flex flex-col items-center justify-center gap-3`}>
+            <div className={`p-5 rounded-2xl border ${
+              isCyan ? 'border-cyan-500/30 bg-cyan-500/10' : 'border-purple-500/30 bg-purple-500/10'
+            }`}>
+              <Icon className={`w-10 h-10 ${isCyan ? 'text-cyan-400' : 'text-purple-400'}`} />
+            </div>
+            <span className="text-xs text-white/20 font-mono tracking-widest uppercase">
+              {feature.imageAlt}
+            </span>
+          </div>
+        )}
+
+        {/* Subtle gradient fade into card bottom */}
+        <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#0d0d14] to-transparent pointer-events-none" />
+      </div>
+
+      {/* Text content */}
+      <div className="px-5 py-4">
+        <p className="text-sm text-white/80 leading-relaxed">
+          <span className={`font-bold ${isCyan ? 'text-cyan-400' : 'text-purple-400'}`}>
+            {feature.highlight}{' '}
+          </span>
+          {feature.description}
+        </p>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function FeaturesSection() {
   return (
-    <section id="features" className="py-24 px-6 relative border-t border-border/50 bg-black/40">
-      <div className="container mx-auto max-w-6xl">
-        
-        <div className="text-center mb-16">
-          <motion.div 
+    <section id="features" className="py-24 px-6 relative border-t border-white/5 bg-black/40">
+      <div className="container mx-auto max-w-5xl">
+
+        {/* Header */}
+        <div className="text-center mb-14">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary text-sm font-medium mb-4 glow-cyan"
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-sm font-medium mb-5"
           >
-            ⚡ It keeps getting better!
+            <span className="text-base">⚡</span> It keeps getting better!
           </motion.div>
-          <motion.h2 
+
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-black font-display mb-4"
+            className="text-4xl md:text-5xl font-black font-display mb-4 text-white"
           >
-            Built for gamers, <span className="text-primary">by gamers</span>
+            We have lots of <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">cool features</span>
           </motion.h2>
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-muted-foreground max-w-2xl mx-auto"
+            className="text-base text-white/50 max-w-xl mx-auto"
           >
-            The convenience of a modern launcher with the power of a decentralized platform.
+            Convenience of a modern game launcher combined with the freedom and flexibility of a decentralized platform.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
-          {/* Card 1: Themes */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="group relative bg-card border border-border p-8 rounded-2xl overflow-hidden hover:border-primary/50 transition-colors"
-          >
-            <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 bg-primary/10 rounded-full blur-2xl group-hover:bg-primary/20 transition-all"></div>
-            
-            <div className="mb-6 flex items-center justify-between">
-              <div className="p-3 bg-black/50 border border-border rounded-xl">
-                <Palette className="w-6 h-6 text-primary" />
-              </div>
-            </div>
-            
-            <h3 className="text-2xl font-bold font-display mb-3">Custom Themes</h3>
-            <p className="text-muted-foreground mb-8">Browse thousands of community themes for your launcher to make it truly yours.</p>
-            
-            <div className="bg-black/60 border border-border/50 rounded-xl p-4 transform translate-y-4 group-hover:-translate-y-1 transition-transform duration-300">
-               <div className="flex gap-2 mb-3">
-                 <div className="w-1/3 h-12 bg-primary/20 border border-primary/30 rounded-lg"></div>
-                 <div className="w-1/3 h-12 bg-secondary/20 border border-secondary/30 rounded-lg"></div>
-                 <div className="w-1/3 h-12 bg-red-500/20 border border-red-500/30 rounded-lg"></div>
-               </div>
-               <div className="h-4 w-2/3 bg-white/5 rounded"></div>
-            </div>
-          </motion.div>
-
-          {/* Card 2: Achievements */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="group relative bg-card border border-border p-8 rounded-2xl overflow-hidden hover:border-secondary/50 transition-colors"
-          >
-            <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 bg-secondary/10 rounded-full blur-2xl group-hover:bg-secondary/20 transition-all"></div>
-            
-            <div className="mb-6 flex items-center justify-between">
-              <div className="p-3 bg-black/50 border border-border rounded-xl">
-                <Trophy className="w-6 h-6 text-secondary" />
-              </div>
-            </div>
-            
-            <h3 className="text-2xl font-bold font-display mb-3">Achievements</h3>
-            <p className="text-muted-foreground mb-8">Unlock achievements, track your progress, and flex on your friends.</p>
-            
-            <div className="bg-black/60 border border-border/50 rounded-xl p-4 transform translate-y-4 group-hover:-translate-y-1 transition-transform duration-300 space-y-3">
-               <div className="flex items-center gap-3 bg-white/5 p-2 rounded-lg">
-                 <div className="w-8 h-8 rounded bg-yellow-500/20 border border-yellow-500/50 flex items-center justify-center">
-                    <Trophy className="w-4 h-4 text-yellow-500" />
-                 </div>
-                 <div className="flex-1">
-                   <div className="h-3 w-1/2 bg-white/20 rounded mb-1"></div>
-                   <div className="h-2 w-1/4 bg-white/10 rounded"></div>
-                 </div>
-               </div>
-               <div className="flex items-center gap-3 bg-white/5 p-2 rounded-lg">
-                 <div className="w-8 h-8 rounded bg-gray-500/20 border border-gray-500/50 flex items-center justify-center">
-                    <Trophy className="w-4 h-4 text-gray-400" />
-                 </div>
-                 <div className="flex-1">
-                   <div className="h-3 w-2/3 bg-white/20 rounded mb-1"></div>
-                   <div className="h-2 w-1/3 bg-white/10 rounded"></div>
-                 </div>
-               </div>
-            </div>
-          </motion.div>
-
-          {/* Card 3: Friends */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="group relative bg-card border border-border p-8 rounded-2xl overflow-hidden hover:border-primary/50 transition-colors"
-          >
-             <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 bg-primary/10 rounded-full blur-2xl group-hover:bg-primary/20 transition-all"></div>
-            
-            <div className="mb-6 flex items-center justify-between">
-              <div className="p-3 bg-black/50 border border-border rounded-xl">
-                <Users className="w-6 h-6 text-primary" />
-              </div>
-            </div>
-            
-            <h3 className="text-2xl font-bold font-display mb-3">Friends & Status</h3>
-            <p className="text-muted-foreground mb-8">See what your crew is playing in real time, join their lobbies instantly.</p>
-            
-            <div className="bg-black/60 border border-border/50 rounded-xl p-4 transform translate-y-4 group-hover:-translate-y-1 transition-transform duration-300 space-y-3">
-               <div className="flex items-center justify-between">
-                 <div className="flex items-center gap-3">
-                   <div className="relative">
-                     <div className="w-8 h-8 rounded-full bg-white/10 border border-white/20"></div>
-                     <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border border-black"></div>
-                   </div>
-                   <div>
-                     <div className="h-3 w-16 bg-white/20 rounded mb-1"></div>
-                     <div className="h-2 w-24 bg-primary/50 rounded"></div>
-                   </div>
-                 </div>
-               </div>
-               <div className="flex items-center justify-between">
-                 <div className="flex items-center gap-3">
-                   <div className="relative">
-                     <div className="w-8 h-8 rounded-full bg-white/10 border border-white/20"></div>
-                     <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-purple-500 rounded-full border border-black"></div>
-                   </div>
-                   <div>
-                     <div className="h-3 w-20 bg-white/20 rounded mb-1"></div>
-                     <div className="h-2 w-16 bg-white/10 rounded"></div>
-                   </div>
-                 </div>
-               </div>
-            </div>
-          </motion.div>
-
-          {/* Card 4: Cloud Saves */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="group relative bg-card border border-border p-8 rounded-2xl overflow-hidden hover:border-secondary/50 transition-colors"
-          >
-             <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 bg-secondary/10 rounded-full blur-2xl group-hover:bg-secondary/20 transition-all"></div>
-            
-            <div className="mb-6 flex items-center justify-between">
-              <div className="p-3 bg-black/50 border border-border rounded-xl">
-                <Cloud className="w-6 h-6 text-secondary" />
-              </div>
-            </div>
-            
-            <h3 className="text-2xl font-bold font-display mb-3">Cloud Saves</h3>
-            <p className="text-muted-foreground mb-8">Pick up exactly where you left off on any device, entirely automatically.</p>
-            
-            <div className="bg-black/60 border border-border/50 rounded-xl p-4 transform translate-y-4 group-hover:-translate-y-1 transition-transform duration-300">
-               <div className="flex justify-between text-xs text-muted-foreground mb-2">
-                 <span>Syncing save data...</span>
-                 <span className="text-secondary">85%</span>
-               </div>
-               <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden mb-3">
-                 <div className="h-full bg-secondary w-[85%] relative">
-                   <div className="absolute inset-0 bg-white/30 animate-pulse"></div>
-                 </div>
-               </div>
-               <div className="flex items-center gap-2 text-xs">
-                 <Cloud className="w-3 h-3 text-secondary" />
-                 <span className="text-white/60">EldenRing_Save01.sav</span>
-               </div>
-            </div>
-          </motion.div>
-
+        {/* Bento grid — 2 columns, 3 rows */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {features.map((feature, i) => (
+            <FeatureCard key={feature.id} feature={feature} delay={i * 0.08} />
+          ))}
         </div>
+
       </div>
     </section>
   );

@@ -3,14 +3,66 @@ import { Link } from 'wouter';
 import { Globe, Rocket } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
 
+function smoothScrollTo(id: string) {
+  const el = document.querySelector(id);
+  if (!el) return;
+  const navbarHeight = 72;
+  const top = el.getBoundingClientRect().top + window.scrollY - navbarHeight;
+
+  // Custom easing: easeInOutCubic
+  const start = window.scrollY;
+  const distance = top - start;
+  const duration = 700;
+  let startTime: number | null = null;
+
+  function easeInOutCubic(t: number) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
+  function step(timestamp: number) {
+    if (!startTime) startTime = timestamp;
+    const elapsed = timestamp - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    window.scrollTo(0, start + distance * easeInOutCubic(progress));
+    if (progress < 1) requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState('');
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
-    return () => removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Highlight active section as user scrolls
+  useEffect(() => {
+    const sections = ['about', 'features', 'classics', 'cloud', 'download'];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive('#' + e.target.id);
+        });
+      },
+      { rootMargin: '-30% 0px -65% 0px' }
+    );
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    smoothScrollTo(href);
+    setActive(href);
+  };
 
   return (
     <header
@@ -39,16 +91,26 @@ export default function Navbar() {
             { href: '#classics', label: 'ROMs'           },
             { href: '#cloud',    label: 'Mods'           },
             { href: '#download', label: 'Descargar'      },
-          ].map(({ href, label }) => (
+          ].map(({ href, label }) => {
+            const isActive = active === href;
+            return (
             <a
               key={href}
               href={href}
-              className="text-muted-foreground hover:text-primary transition-colors relative group"
+              onClick={(e) => handleNav(e, href)}
+              className={`relative group transition-colors duration-200 ${
+                isActive ? 'text-primary' : 'text-muted-foreground hover:text-primary'
+              }`}
             >
               {label}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full" />
+              <span
+                className={`absolute -bottom-1 left-0 h-0.5 bg-primary rounded-full transition-all duration-300 ${
+                  isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                }`}
+              />
             </a>
-          ))}
+            );
+          })}
         </nav>
 
         {/* Right controls */}
